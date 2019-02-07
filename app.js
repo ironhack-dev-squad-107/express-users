@@ -54,4 +54,7 @@ app.locals.title = "Express Users";
 const index = require("./routes/index");
 app.use("/", index);
 
+const auth = require("./routes/auth-router.js");
+app.use("/", auth);
+
 module.exports = app;

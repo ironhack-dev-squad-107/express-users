@@ -1,0 +1,20 @@
+<h2>Sign Up</h2>
+
+<form action="/process-signup" method="POST">
+  <label>
+    Your Full Name (2 characters or more):
+    <input type="text" name="fullName" placeholder="Leia Organa" minlength="2" required />
+  </label>
+
+  <label>
+    Email (something@something.com):
+    <input type="email" name="email" placeholder="leia@resistance.com" required />
+  </label>
+
+  <label>
+    Password (must contain a digit 0-9):
+    <input type="password" name="originalPassword" placeholder="It's a secret" required />
+  </label>
+
+  <button>Sign Up</button>
+</form>
