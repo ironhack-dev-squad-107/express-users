@@ -14,6 +14,10 @@ router.post("/process-signup", (req, res, next) => {
 
   // enforce password rules (can't be empty and MUST have a digit)
   if (!originalPassword || !originalPassword.match(/[0-9]/)) {
+    // req.flash() sends a feedback message before a redirect
+    // (it's defined by the "connect-flash" npm package)
+    req.flash("error", "Password can't be blank and must contain a number.");
+
     // redirect to the SIGNUP PAGE if the password is BAD
     res.redirect("/signup");
     // use return to STOP the function here if the password is BAD
@@ -25,6 +29,10 @@ router.post("/process-signup", (req, res, next) => {
 
   User.create({ fullName, email, encryptedPassword })
     .then(() => {
+      // req.flash() sends a feedback message before a redirect
+      // (it's defined by the "connect-flash" npm package)
+      req.flash("success", "Sign up success! 😃");
+
       // redirect to the HOME PAGE if the sign up WORKED
       res.redirect("/");
     })
@@ -43,6 +51,10 @@ router.post("/process-login", (req, res, next) => {
     .then(userDoc => {
       // User.findOne() will give us NULL in userDoc if it found nothing
       if (!userDoc) {
+        // req.flash() sends a feedback message before a redirect
+        // (it's defined by the "connect-flash" npm package)
+        req.flash("error", "Email is incorrect. 🤦‍♂️");
+
         // redirect to LOGIN PAGE if result is NULL (no account with that email)
         res.redirect("/login");
         // use return to STOP the function here if the EMAIL is BAD
@@ -54,6 +66,10 @@ router.post("/process-login", (req, res, next) => {
       // validate the password by using bcrypt.compareSync()
       // (bcrypt.compareSync() will return FALSE if the passwords don't match)
       if (!bcrypt.compareSync(originalPassword, encryptedPassword)) {
+        // req.flash() sends a feedback message before a redirect
+        // (it's defined by the "connect-flash" npm package)
+        req.flash("error", "Password is incorrect. 🤦‍♀️");
+
         // redirect to LOGIN PAGE if the passwords don't match
         res.redirect("/login");
         // use return to STOP the function here if the PASSWORD is BAD
@@ -62,6 +78,10 @@ router.post("/process-login", (req, res, next) => {
 
       // email & password are CORRECT!
       // HERE WE ARE MISSING SOME CODE FOR REAL LOG IN
+
+      // req.flash() sends a feedback message before a redirect
+      // (it's defined by the "connect-flash" npm package)
+      req.flash("success", "Log in success! 😎");
       res.redirect("/");
     })
     .catch(err => next(err));
