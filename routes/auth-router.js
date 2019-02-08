@@ -77,7 +77,10 @@ router.post("/process-login", (req, res, next) => {
       }
 
       // email & password are CORRECT!
-      // HERE WE ARE MISSING SOME CODE FOR REAL LOG IN
+      // if we MANUALLY managed the user session
+      // req.session.userId = userDoc._id;
+
+      // instead we'll use PASSPORT – an npm package for managing user sessions
 
       // req.flash() sends a feedback message before a redirect
       // (it's defined by the "connect-flash" npm package)

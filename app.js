@@ -10,6 +10,7 @@ const logger = require("morgan");
 const path = require("path");
 const session = require("express-session");
 const flash = require("connect-flash");
+const MongoStore = require("connect-mongo")(session);
 
 mongoose
   .connect("mongodb://localhost/express-users", { useNewUrlParser: true })
@@ -60,7 +61,9 @@ app.use(
     saveUninitialized: true,
     resave: true,
     // secret should be a string that's different for every app
-    secret: "ca^khT8KYd,G73C7R9(;^atb?h>FTWdbn4pqEFUKs3"
+    secret: "ca^khT8KYd,G73C7R9(;^atb?h>FTWdbn4pqEFUKs3",
+    // store session data inside our MongoDB with the "connect-mongo" package
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
   })
 );
 // allow our routes to use FLASH MESSAGES – feedback messages before redirects
