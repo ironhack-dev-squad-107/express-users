@@ -4,5 +4,12 @@
     "email": "a@a.a",
     "originalPassword": "aaaa0",
     "role": "admin"
+  },
+
+  {
+    "fullName": "Bastien Tran",
+    "email": "plip@plop.net",
+    "originalPassword": "ttb",
+    "role": "admin"
   }
 ]
