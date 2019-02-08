@@ -1,0 +1,20 @@
+<h2>Add a Room</h2>
+
+<form action="/process-room" method="POST">
+  <label>
+    Room Name:
+    <input type="text" name="name" placeholder="Cozy Studio in Paris..." required />
+  </label>
+
+  <label>
+    Description (100 characters or more):
+    <input type="text" name="description" placeholder="Only 5 minutes away from the Louvre..." minlength="100" required />
+  </label>
+
+  <label>
+    Picture URL:
+    <input type="text" name="pictureUrl" placeholder="http://example.com/room.jpg" required />
+  </label>
+
+  <button>Save This Room</button>
+</form>
