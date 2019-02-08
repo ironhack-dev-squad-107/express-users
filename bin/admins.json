@@ -18,5 +18,11 @@
     "email": "popo@plop.net",
     "originalPassword": "ttb0",
     "role": "admin"
+  },
+  {
+    "fullName": "Barney Bronson",
+    "email": "b@b.b",
+    "originalPassword": "bbbb0",
+    "role": "admin"
   }
 ]
