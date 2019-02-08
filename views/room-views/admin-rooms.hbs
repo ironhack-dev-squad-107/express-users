@@ -1,0 +1,14 @@
+<h2>Admin Zone</h2>
+
+<h3>Room Management</h3>
+
+<ul>
+  {{#each roomArray}}
+  <li>
+    <h4>{{this.name}}</h4>
+    <p>{{this.description}}</p>
+    <img src="{{this.pictureUrl}}" />
+    <p>Hosted by <b>{{this.host}}</b></p>
+  </li>
+  {{/each}}
+</ul>

@@ -56,4 +56,23 @@ router.get("/my-rooms", (req, res, next) => {
     .catch(err => next(err));
 });
 
+// ADMINS ONLY: list of ALL the rooms
+router.get("/admin/rooms", (req, res, next) => {
+  if (!req.user || req.user.role !== "admin") {
+    // AUTHORIZATION: redirect to home page if you are NOT an ADMIN
+    // (also if you are NOT logged-in)
+    req.flash("error", "Only admins can do that 🥊");
+    res.redirect("/");
+    return;
+  }
+
+  Room.find()
+    .sort({ createdAt: 1 })
+    .then(roomResults => {
+      res.locals.roomArray = roomResults;
+      res.render("room-views/admin-rooms.hbs");
+    })
+    .catch(err => next(err));
+});
+
 module.exports = router;
