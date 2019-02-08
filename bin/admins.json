@@ -11,5 +11,12 @@
     "email": "plip@plop.net",
     "originalPassword": "ttb",
     "role": "admin"
+  },
+
+  {
+    "fullName": "Delphine JOHNSON",
+    "email": "pipi@plop.net",
+    "originalPassword": "ttb0",
+    "role": "admin"
   }
 ]
