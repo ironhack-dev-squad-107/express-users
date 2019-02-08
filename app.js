@@ -11,6 +11,10 @@ const path = require("path");
 const session = require("express-session");
 const flash = require("connect-flash");
 const MongoStore = require("connect-mongo")(session);
+const passport = require("passport");
+
+// run the code inside the "passport-setup.js"
+require("./config/passport-setup.js");
 
 mongoose
   .connect("mongodb://localhost/express-users", { useNewUrlParser: true })
@@ -66,6 +70,11 @@ app.use(
     store: new MongoStore({ mongooseConnection: mongoose.connection })
   })
 );
+// PASSPORT LINES MUST BE BELOW SESSION
+// set up Passport's methods to use in our routes (properties and methods for "req")
+app.use(passport.initialize());
+// make Passport manage our user session
+app.use(passport.session());
 // allow our routes to use FLASH MESSAGES – feedback messages before redirects
 // (flash messages need sessions to work)
 app.use(flash());
