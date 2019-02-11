@@ -1,6 +1,7 @@
 <h2>Add a Room</h2>
 
-<form action="/process-room" method="POST">
+<!-- NEED enctype="multipart/form-data" for UPLOADING FILES -->
+<form action="/process-room" method="POST" enctype="multipart/form-data">
   <label>
     Room Name:
     <input type="text" name="name" placeholder="Cozy Studio in Paris..." required />
@@ -12,8 +13,8 @@
   </label>
 
   <label>
-    Picture URL:
-    <input type="text" name="pictureUrl" placeholder="http://example.com/room.jpg" required />
+    Picture:
+    <input type="file" name="pictureUpload" required />
   </label>
 
   <button>Save This Room</button>

@@ -1,6 +1,7 @@
 const express = require("express");
 
 const Room = require("../models/room-model.js");
+const fileUploader = require("../config/file-upload.js");
 
 const router = express.Router();
 
@@ -17,20 +18,33 @@ router.get("/room-add", (req, res, next) => {
   }
 });
 
-router.post("/process-room", (req, res, next) => {
-  const { name, description, pictureUrl } = req.body;
+// single() for ONE file
+// array() for MANY files
+// "pictureUpload" is the input's name
+router.post(
+  "/process-room",
+  fileUploader.single("pictureUpload"),
+  (req, res, next) => {
+    const { name, description } = req.body;
 
-  // req.user comes from Passport's deserializeUser()
-  // (it's the document from the database of the logged-in user)
-  const host = req.user._id;
+    // req.user comes from Passport's deserializeUser()
+    // (it's the document from the database of the logged-in user)
+    const host = req.user._id;
 
-  Room.create({ name, description, pictureUrl, host })
-    .then(() => {
-      req.flash("success", "Room created successfully! 🛏");
-      res.redirect("/my-rooms");
-    })
-    .catch(err => next(err));
-});
+    // multer puts all file info it got from the service into req.file
+    console.log("File upload is ALWAYS in req.file OR req.files", req.file);
+
+    // get part of the Cloudinary information
+    const pictureUrl = req.file.secure_url;
+
+    Room.create({ name, description, pictureUrl, host })
+      .then(() => {
+        req.flash("success", "Room created successfully! 🛏");
+        res.redirect("/my-rooms");
+      })
+      .catch(err => next(err));
+  }
+);
 
 router.get("/my-rooms", (req, res, next) => {
   // req.user comes from Passport's deserializeUser()
