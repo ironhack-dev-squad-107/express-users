@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 
 const User = require("../models/user-model.js");
+const { sendSignupMail } = require("../config/nodemailer-setup.js");
 
 const router = express.Router();
 
@@ -28,13 +29,17 @@ router.post("/process-signup", (req, res, next) => {
   const encryptedPassword = bcrypt.hashSync(originalPassword, 10);
 
   User.create({ fullName, email, encryptedPassword })
-    .then(() => {
-      // req.flash() sends a feedback message before a redirect
-      // (it's defined by the "connect-flash" npm package)
-      req.flash("success", "Sign up success! 😃");
+    .then(userDoc => {
+      sendSignupMail(userDoc)
+        .then(() => {
+          // req.flash() sends a feedback message before a redirect
+          // (it's defined by the "connect-flash" npm package)
+          req.flash("success", "Sign up success! 😃");
 
-      // redirect to the HOME PAGE if the sign up WORKED
-      res.redirect("/");
+          // redirect to the HOME PAGE if the sign up WORKED
+          res.redirect("/");
+        })
+        .catch(err => next(err));
     })
     .catch(err => next(err));
 });
