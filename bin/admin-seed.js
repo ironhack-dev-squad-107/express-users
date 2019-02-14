@@ -16,7 +16,7 @@ const adminData = require("./admins.json");
 // connect to the MongoDB server with database name equal to the project name
 // (also has console.logs for successful and failed connections)
 mongoose
-  .connect("mongodb://localhost/express-users", { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then(x => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
